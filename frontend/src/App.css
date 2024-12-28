@@ -1,0 +1,35 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* .App {
+  text-align: center;
+} */
+
+.custom-shadow{
+  box-shadow: 10px 0 10px -5px rgba(0, 0, 0, 0.5);
+}
+
+.userTable {
+  @apply bg-white w-full;
+}
+
+.userTable th {
+  @apply border text-sm lg:text-base font-medium;
+}
+
+.userTable td {
+  @apply border text-sm lg:text-base text-center;
+}
+
+.table-container {
+  @apply w-full lg:w-full max-w-screen-xl mx-auto px-4;
+}
+
+/* Scroll None */
+.scroll-none::-webkit-scrollbar{
+  display: none;
+}
+
