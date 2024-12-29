@@ -5,13 +5,14 @@ import { useParams } from "react-router-dom";
 import moment from "moment";
 import displayINRCurrency from "../helpers/displayCurrency.js";
 
-const OrderPage = () => {
+const AllOrder = () => {
   const [orderData, setOrderData] = useState([]);
 
   const userId = useParams().userId;
 
   const fetchOrders = async () => {
-    const response = await axios.get("http://localhost:8080/api/order", {
+
+    const response = await axios.get("http://localhost:8080/api/all-order", {
       headers: {
         userId: userId,
       },
@@ -34,6 +35,7 @@ const OrderPage = () => {
     fetchOrders();
   }, []);
 
+  console.log(orderData);
   return (
     <div className="h-[calc(100vh-125px)] max-h-[calc(100vh-125px)] overflow-y-scroll scroll-none">
       {!orderData[0] && <p>No Order Available</p>}
@@ -114,7 +116,10 @@ const OrderPage = () => {
               {/* Total Amout  */}
               <div className="ml-auto w-fit">
                 <p className="font-semibold text-lg">
-                  Total Amount: <span className="text-red-500 font-medium">{displayINRCurrency(order?.totalAmount)}</span>
+                  Total Amount:{" "}
+                  <span className="text-red-500 font-medium">
+                    {displayINRCurrency(order?.totalAmount)}
+                  </span>
                 </p>
               </div>
             </div>
@@ -125,4 +130,4 @@ const OrderPage = () => {
   );
 };
 
-export default OrderPage;
+export default AllOrder;

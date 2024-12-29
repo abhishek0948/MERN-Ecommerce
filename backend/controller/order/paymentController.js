@@ -8,6 +8,14 @@ exports.payment = async (req,res) => {
 
         const user  = await userModel.findById(userId);
 
+        if(!user) {
+            return res.status(404).json({
+                message: "User Not found",
+                success: false,
+                error: ture
+            })
+        }
+
         const params = {
             submit_type: 'pay',
             mode: 'payment',
@@ -19,6 +27,9 @@ exports.payment = async (req,res) => {
                 }
             ],
             customer_email: user.email,
+            metadata : {
+                userId: req?.user._id
+            },
             line_items: cartItems.map((item,idx) => {
                 return {
                     price_data: {
@@ -44,6 +55,7 @@ exports.payment = async (req,res) => {
         }
 
         const session = await stripe.checkout.sessions.create(params);
+
         res.status(200).json(session)
     } catch (error) {
         return res.json({

@@ -15,7 +15,7 @@ function Header() {
   const searchInput = useLocation();
   const URLSearch = new URLSearchParams(searchInput?.search);
   const search = URLSearch.getAll("q");
-  const [searchQuery,setSearchQuery] = useState(search);
+  const [searchQuery, setSearchQuery] = useState(search);
   const user = useSelector((state) => state?.user?.user || {});
 
   const context = useContext(Context);
@@ -23,14 +23,14 @@ function Header() {
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
-    const {value} = e.target;
+    const { value } = e.target;
     setSearchQuery(value);
-    if(value) {
-      navigate(`/search?q=${value}`)
+    if (value) {
+      navigate(`/search?q=${value}`);
     } else {
-      navigate('/search');
+      navigate("/search");
     }
-  }
+  };
 
   const handleLogout = async () => {
     try {
@@ -44,7 +44,7 @@ function Header() {
       if (dataResponse.data.success) {
         toast.success(dataResponse.data.message);
         dispatch(deleteUserDetails());
-        navigate('/');
+        navigate("/");
       }
 
       if (dataResponse.data.error) {
@@ -53,8 +53,6 @@ function Header() {
     } catch (err) {
       toast.error("Something went wrong while login");
     }
-
-    // console.log(context);
   };
 
   return (
@@ -96,6 +94,7 @@ function Header() {
               )}
             </div>
 
+            {/* Admin User  */}
             {menuDisplay && user?._id && user?.role === "ADMIN" && (
               <div
                 className="absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded"
@@ -113,20 +112,35 @@ function Header() {
                 )}
               </div>
             )}
+
+            {/* General User  */}
+            {menuDisplay && user?._id && user?.role === "GENERAL" && (
+              <div
+                className="absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded"
+                onClick={() => setMenuDisplay((prev) => !prev)}
+              >
+                <nav>
+                  <Link
+                    to={`/order/${user?._id}`}
+                    className="whitespace-nowrap md:block hidden hover:bg-slate-100 p-2"
+                  >
+                    Orders
+                  </Link>
+                </nav>
+              </div>
+            )}
           </div>
 
-          {
-            user?._id && (
-              <Link to={"/cart"} className="text-3xl relative">
-                <span>
-                  <FaShoppingCart />
-                </span>
-                <div className="bg-red-600 text-white w-5 h-5 rounded-full p-1 flex items-center justify-center absolute -top-2 -right-2">
-                  <p className="text-xs">{context?.cartProductCount}</p>
-                </div>
-              </Link>
-            ) 
-          }
+          {user?._id && (
+            <Link to={"/cart"} className="text-3xl relative">
+              <span>
+                <FaShoppingCart />
+              </span>
+              <div className="bg-red-600 text-white w-5 h-5 rounded-full p-1 flex items-center justify-center absolute -top-2 -right-2">
+                <p className="text-xs">{context?.cartProductCount}</p>
+              </div>
+            </Link>
+          )}
 
           <div>
             {user._id ? (

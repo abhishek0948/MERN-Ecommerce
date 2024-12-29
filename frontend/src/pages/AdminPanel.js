@@ -57,6 +57,17 @@ const AdminPanel = () => {
             >
               All Products
             </NavLink>
+
+            <NavLink
+              to={`all-orders/`+user._id}
+              className={({ isActive }) =>
+                isActive
+                  ? "px-2 py-1 bg-slate-100"
+                  : "px-2 py-1 hover:bg-slate-100"
+              }
+            >
+              All Orders
+            </NavLink>
           </nav>
         </div>
       </aside>

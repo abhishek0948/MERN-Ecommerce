@@ -27,6 +27,9 @@ const cartController = require('../controller/user/cartController.js');
 const searchProduct = require('../controller/product/searchProduct.js');
 const { filterProduct } = require('../controller/product/filterProduct.js');
 const { payment } = require('../controller/order/paymentController.js');
+const webHook = require('../controller/order/webHook.js');
+const { orderController } = require('../controller/order/orderController.js');
+const allOrders = require('../controller/order/allOrders.js');
 
 // User Login routes
 router.post('/signup',userSignupController.userSignUpController);
@@ -57,5 +60,8 @@ router.post('/delete-cart-product',authToken.authToken,cartController.deleteAddT
 
 // Payment and order
 router.post('/checkout',authToken.authToken,payment);
+router.post('/webhook',webHook) //api/webhook
+router.get('/order',authToken.authToken,orderController);
+router.get('/all-order',authToken.authToken,allOrders);
 
 module.exports = router;
